@@ -25,7 +25,7 @@ function tableDefinition(def) {
   function alwaysTrue() { return true; }
 
   function respectType(v) {
-    if(typeof v === 'string') return '"' + v + '"';
+    if(typeof v === 'string') return "'" + v + "'";
     return v;
   }
 }
