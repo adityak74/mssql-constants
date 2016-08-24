@@ -15,7 +15,7 @@ To me, this is ensured by deriving our constants directly from the SQL layer.
 ## Example
 
 ```
-var mssqlConstants = require('mssqlConstants');
+var mssqlConstants = require('mssql-constants');
 
 mssqlConstants.createConstantFiles(
   {
