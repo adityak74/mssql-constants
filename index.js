@@ -12,7 +12,7 @@ function tableDefinition(def) {
     // [STR] Table name from the database
     keyColumn: def.keyColumn,
     // [STR] Column to key enum off of
-    keyTransform: def.keyTransform || respectType,
+    keyTransform: def.keyTransform || stringify,
     // [FN(enumKeys)] FN to transform keys
     tableFilter: def.tableFilter || alwaysTrue,
     // [FN(tableRows)] FN to filter table rows
@@ -23,6 +23,10 @@ function tableDefinition(def) {
   };
 
   function alwaysTrue() { return true; }
+
+  function stringify(v) {
+    return "'" + v + "'";
+  }
 
   function respectType(v) {
     if(typeof v === 'string') return "'" + v + "'";

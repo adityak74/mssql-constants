@@ -1,11 +1,10 @@
 {
   "name": "mssql-constants",
-  "version": "0.1.5",
+  "version": "0.1.6",
   "description": "Writes mssql tables to a constants enum",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js",
-    "test": "node test.js"
+    "start": "node index.js"
   },
   "author": "Todd Tarsi",
   "license": "ISC",
@@ -13,8 +12,7 @@
     "async": "^2.0.1",
     "mssql": "^3.3.0"
   },
-  "repository" :
-  { 
+  "repository" : {
     "type" : "git",
     "url" : "https://github.com/toddtarsi/mssql-constants.git"
   }
