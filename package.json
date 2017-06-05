@@ -1,6 +1,6 @@
 {
   "name": "mssql-constants",
-  "version": "0.1.7",
+  "version": "0.2.0",
   "description": "Writes mssql tables to a constants enum",
   "main": "index.js",
   "scripts": {
