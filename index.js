@@ -44,8 +44,22 @@ function writeConstantsDirectory(
     return { def: d, table: [], enums: [] };
   });
 
+  let sqlConnPool = null;
+  const connectToSql = () => {
+    if (sqlConnPool) sqlConnPool.removeListener('error', connectToSql);
+    sqlConnPool = new SqlConnectionPool(
+      sqlParams,
+      (sqlConnErr) => {
+        if (sqlConnErr) setTimeout(connectToSql, 5000);
+        else app.sqlConnPool.on('error', connectToSql);
+      },
+    );
+  };
+
+  connectToSql();
+
   async.series([
-    mapFn(readTable(sqlParams), definitionWrapper),
+    mapFn(readTable(sqlConnPool), definitionWrapper),
     mapFn(enumsFromTable(), definitionWrapper),
     mapFn(fileFromEnum(directoryPath, tableDefinitions), definitionWrapper)
   ], done);
