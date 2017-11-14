@@ -3,6 +3,7 @@ var async = require('async');
 var readTable = require('./lib/readTable');
 var fileFromEnum = require('./lib/fileFromEnum');
 var enumsFromTable = require('./lib/enumsFromTable');
+var SqlConnectionPool = require('mssql').ConnectionPool;
 
 function tableDefinition(def) {
   return {
