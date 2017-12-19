@@ -46,24 +46,26 @@ function writeConstantsDirectory(
   });
 
   let sqlConnPool = null;
-  const connectToSql = () => {
-    if (sqlConnPool) sqlConnPool.removeListener('error', connectToSql);
+  const connectToSql = (done) => {
+    let firstTime = !sqlConnPool;
+    if (!firstTime) sqlConnPool.removeListener('error', connectToSql);
     sqlConnPool = new SqlConnectionPool(
       sqlParams,
       (sqlConnErr) => {
         if (sqlConnErr) setTimeout(connectToSql, 5000);
         else sqlConnPool.on('error', connectToSql);
+        if (firstTime) done();
       }
     );
   };
 
-  connectToSql();
-
-  async.series([
-    mapFn(readTable(sqlConnPool), definitionWrapper),
-    mapFn(enumsFromTable(), definitionWrapper),
-    mapFn(fileFromEnum(directoryPath, tableDefinitions), definitionWrapper)
-  ], done);
+  connectToSql(() => {
+    async.series([
+      mapFn(readTable(sqlConnPool), definitionWrapper),
+      mapFn(enumsFromTable(), definitionWrapper),
+      mapFn(fileFromEnum(directoryPath, tableDefinitions), definitionWrapper)
+    ], done);
+  });
 };
 
 function mapFn(op, list) {
