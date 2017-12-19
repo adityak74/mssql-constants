@@ -52,8 +52,8 @@ function writeConstantsDirectory(
       sqlParams,
       (sqlConnErr) => {
         if (sqlConnErr) setTimeout(connectToSql, 5000);
-        else app.sqlConnPool.on('error', connectToSql);
-      },
+        else sqlConnPool.on('error', connectToSql);
+      }
     );
   };
 
