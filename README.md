@@ -41,7 +41,7 @@ sqlConstants.createConstantFiles(
         'state',
       ]
     }),
-    mssqlConstants.tableDefinition({
+    sqlConstants.tableDefinition({
       file: 'country',
       table: 'Countries',
       keyColumn: 'countryName',
