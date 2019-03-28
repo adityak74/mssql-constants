@@ -1,9 +1,9 @@
-# mssql-constants
+# sql-constants
 
 ## Dependencies
 
 * [Node.js](https://nodejs.org/en/)
-* MSSQL
+* Sequelize
 
 ## Consumption
 
@@ -15,15 +15,16 @@ To me, this is ensured by deriving our constants directly from the SQL layer.
 ## Example
 
 ```
-var mssqlConstants = require('mssql-constants');
+var sqlConstants = require('sql-constants');
 
-mssqlConstants.createConstantFiles(
+sqlConstants.createConstantFiles(
   {
     // SQL details, required to query tables
     database: configuration.sql_database,
+    dialect: 'mysql | mssql',
     password: configuration.sql_password,
     server: configuration.sql_server,
-    user: configuration.sql_user
+    user: configuration.sql_user,
   },
   // Directory to write constants into
   __dirname + '/constants',
@@ -31,7 +32,7 @@ mssqlConstants.createConstantFiles(
     // Each table definition corresponds to a constant file
     // If multiple value columns are specified, the file will export a dictionary of enums
     // If just one value column is specified, the file will export the enum directly
-    mssqlConstants.tableDefinition({
+    sqlConstants.tableDefinition({
       file: 'locations',
       table: 'Locations',
       keyColumn: 'locationName',
