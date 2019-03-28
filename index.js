@@ -1,9 +1,10 @@
 var fs = require('fs');
 var async = require('async');
+var sequelize = require('sequelize');
 var readTable = require('./lib/readTable');
 var fileFromEnum = require('./lib/fileFromEnum');
 var enumsFromTable = require('./lib/enumsFromTable');
-var SqlConnectionPool = require('mssql').ConnectionPool;
+var sqlConnectionFactory = require('./lib/sqlConnectionFactory');
 
 function tableDefinition(def) {
   return {
@@ -49,19 +50,19 @@ function writeConstantsDirectory(
   const connectToSql = (done) => {
     let firstTime = !sqlConnPool;
     if (!firstTime) sqlConnPool.removeListener('error', connectToSql);
-    sqlConnPool = new SqlConnectionPool(
+    sqlConnPool = sqlConnectionFactory(
       sqlParams,
-      (sqlConnErr) => {
+      (sqlConnErr, sqlConn) => {
         if (sqlConnErr) setTimeout(connectToSql, 5000);
-        else sqlConnPool.on('error', connectToSql);
-        if (firstTime) done();
+        sqlConnPool = sqlConn;
+        done(sqlConn);
       }
     );
   };
 
-  connectToSql(() => {
+  connectToSql((sqlConnectionPool) => {
     async.series([
-      mapFn(readTable(sqlConnPool), definitionWrapper),
+      mapFn(readTable(sqlConnectionPool), definitionWrapper),
       mapFn(enumsFromTable(), definitionWrapper),
       mapFn(fileFromEnum(directoryPath, tableDefinitions), definitionWrapper)
     ], done);

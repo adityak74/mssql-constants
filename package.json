@@ -10,10 +10,12 @@
   "license": "ISC",
   "dependencies": {
     "async": "^2.0.1",
-    "mssql": "4.1.0"
+    "tedious": "6.1.0",
+    "mysql2": "1.6.5",
+    "sequelize": "5.2.3"
   },
-  "repository" : {
-    "type" : "git",
-    "url" : "https://github.com/toddtarsi/mssql-constants.git"
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/toddtarsi/mssql-constants.git"
   }
 }
