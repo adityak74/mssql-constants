@@ -4,6 +4,8 @@
 
 * [Node.js](https://nodejs.org/en/)
 * Sequelize
+* tedious
+* mysql2
 
 ## Consumption
 
