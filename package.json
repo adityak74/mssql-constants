@@ -1,12 +1,12 @@
 {
-  "name": "mssql-constants",
-  "version": "1.3.3",
+  "name": "sql-constants",
+  "version": "1.3.4",
   "description": "Writes mssql tables to a constants enum",
   "main": "index.js",
   "scripts": {
     "start": "node index.js"
   },
-  "author": "Todd Tarsi",
+  "author": "Todd Tarsi, Aditya Karnam",
   "license": "ISC",
   "dependencies": {
     "async": "^2.0.1",
