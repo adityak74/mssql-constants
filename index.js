@@ -1,6 +1,7 @@
 var fs = require('fs');
 var async = require('async');
 var readTable = require('./lib/readTable');
+var makeIndexFile = require('./lib/makeIndexFile');
 var fileFromEnum = require('./lib/fileFromEnum');
 var enumsFromTable = require('./lib/enumsFromTable');
 var SqlConnectionPool = require('mssql').ConnectionPool;
@@ -64,7 +65,10 @@ function writeConstantsDirectory(
       mapFn(readTable(sqlConnPool), definitionWrapper),
       mapFn(enumsFromTable(), definitionWrapper),
       mapFn(fileFromEnum(directoryPath, tableDefinitions), definitionWrapper)
-    ], done);
+    ], (err) => {
+      if (err) throw err;
+      makeIndexFile(directoryPath, done);
+    });
   });
 };
 
